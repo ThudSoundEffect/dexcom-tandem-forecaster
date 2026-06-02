@@ -51,7 +51,7 @@ def inverse_scale(x: torch.Tensor | np.ndarray) -> np.ndarray:
 
 
 def _glucose_color(value: float) -> str:
-    """Return a colour string reflecting clinical glucose severity."""
+    """Return a color string reflecting glucose severity."""
     if value < HYPO_THRESHOLD:
         return "#d62728"   # red
     if value < LOW_THRESHOLD:

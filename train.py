@@ -69,10 +69,11 @@ def aggregate_detection_losses(
     Returns:
         List of scalar detection scores, one per sample.
     """
+    device = next(model.parameters()).device
     losses: list[float] = []
     for i in range(len(data)):
         history, real = data[i]
-        predictions = model(history)
+        predictions = model(history.to(device))
 
         predicted_mgdl = inverse_scale(to_numpy(predictions))
         real_mgdl = inverse_scale(to_numpy(real))
@@ -82,7 +83,6 @@ def aggregate_detection_losses(
         )
         losses.append(loss)
     return losses
-
 
 if __name__ == "__main__":
     cgm_df, bolus_df, basal_df = load_training_data()
@@ -111,6 +111,7 @@ if __name__ == "__main__":
 
     torch.save(model.state_dict(), WEIGHTS_PATH)
     print(f"Saved {WEIGHTS_PATH}")
+
     model.eval()
     detection_losses = aggregate_detection_losses(model, train_data)
     detection_stats = {
