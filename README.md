@@ -7,7 +7,7 @@ A real-time glucose forecasting and anomaly detection system for Tandem t:slim X
 ## How It Works
 
 1. **Training** — `train.py` ingests Tandem Source CSV exports, merges CGM, basal, and bolus data into aligned 5-minute windows, fits a preprocessing pipeline, and trains the LSTM.
-2. **Forecasting** — `simulate.py` connects to the Tandem Source API, fetches the last 6 hours of live pump events, runs the model, and prints a detection report with a clinical-style chart.
+2. **Forecasting** — `simulate.py` connects to the Tandem Source API, fetches the last 6 hours of live pump events, runs the model, and prints a detection report with a Dexco-styled chart.
 3. **Anomaly detection** — a weighted composite score (value error + slope error + rising-slope penalty) flags readings that diverge from the forecast at 2σ or 3σ.
 
 ---
