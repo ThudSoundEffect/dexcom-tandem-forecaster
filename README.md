@@ -19,12 +19,13 @@ A real-time glucose forecasting and anomaly detection system for Tandem t:slim X
 ├── dataset.py              # PyTorch sliding-window Dataset
 ├── model.py                # CgmLstm: 3-layer LSTM → FC(24)
 ├── model_preprocessing.py  # Sklearn imputation + MinMax scaling pipeline
-├── simulate.py             # Live inference, anomaly detection, console report
+├── simulate.py             # Live forecast, anomaly detection, console report
 ├── train.py                # Training script
 ├── visualizer.py           # Matplotlib charts
 ├── Training/               # Place zip reports here (not committed)
 ├── model_weights.pth       # Saved model weights (not committed)
 ├── preprocessor.joblib     # Fitted sklearn pipeline (not committed)
+├── detection_stats.joblib  # Fitted anomaly detection benchmarks (not committed)
 └── .env                    # Credentials (not committed — see Setup)
 ```
 
@@ -83,7 +84,7 @@ git clone https://github.com/ThudSoundEffect/cgm-forecast-monitor.git
 cd cgm-forecast-monitor
 ```
 
-**2. Create a `.env` file** with your Tandem credentials:
+**2. Create a `.env` file** with your Tandem Source credentials:
 
 ```
 TANDEM_EMAIL=your@email.com
@@ -106,9 +107,10 @@ python train.py
 This will:
 - Extract and merge all zip archives in `Training/`
 - Fit the preprocessing pipeline and save `preprocessor.joblib`
+- Aggregates anomaly detection metrics and save `detection_stats.joblib`
 - Train the LSTM for 10 epochs and save `model_weights.pth`
 
-Both saved files are required to run the simulator.
+All three saved files are required to run the simulator.
 
 ---
 
@@ -129,6 +131,7 @@ Fetches live pump data, makes forecasts, displays a forecast chart, and prints a
 ```
 
 The chart shows colour-coded glucose readings (green = in-range, orange = low/high, red = hypo/hyper) and dashed forecast.
+<img width="1400" height="500" alt="image" src="https://github.com/user-attachments/assets/534cf6cf-8ddb-40ce-9d8f-13a6309349ef" />
 
 ---
 
