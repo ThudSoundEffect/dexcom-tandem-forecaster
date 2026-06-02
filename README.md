@@ -22,7 +22,7 @@ A real-time glucose forecasting and anomaly detection system for Tandem t:slim X
 ├── simulate.py             # Live inference, anomaly detection, console report
 ├── train.py                # Training script
 ├── visualizer.py           # Matplotlib charts
-├── Training/               # Place patient zip archives here (not committed)
+├── Training/               # Place zip reports here (not committed)
 ├── model_weights.pth       # Saved model weights (not committed)
 ├── preprocessor.joblib     # Fitted sklearn pipeline (not committed)
 └── .env                    # Credentials (not committed — see Setup)
@@ -46,7 +46,7 @@ A real-time glucose forecasting and anomaly detection system for Tandem t:slim X
 - Commanded basal dose
 - Insulin delivered (bolus)
 - Carbohydrates
-- Insulin on board (linear decay model, 4-hour horizon)
+- Insulin on board (linear decay model, 4-hour duration of insulin action)
 - Time-of-day sin/cos encoding
 
 ---
@@ -79,7 +79,7 @@ A CUDA-capable GPU is expected for training. Inference runs on CPU if needed —
 **1. Clone the repo**
 
 ```bash
-git clone https://github.com/your-username/cgm-forecast-monitor.git
+git clone https://github.com/ThudSoundEffect/cgm-forecast-monitor.git
 cd cgm-forecast-monitor
 ```
 
