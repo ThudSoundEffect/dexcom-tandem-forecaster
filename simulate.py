@@ -1,5 +1,6 @@
 """Live anomaly detection using the Tandem pump API."""
 import os
+import sys
 import time
 from datetime import datetime, timedelta
 
@@ -7,6 +8,7 @@ import joblib
 import pandas as pd
 import torch
 import torch.nn.functional as F
+from jwt import ImmatureSignatureError
 from torch import nn
 from tconnectsync.api.tandemsource import TandemSourceApi
 from tconnectsync.eventparser.events import (
@@ -199,14 +201,24 @@ class Simulate:
 
 if __name__ == "__main__":
     load_dotenv()
-    sim = Simulate(
-        email = os.getenv("TANDEM_EMAIL"),
-        password = os.getenv("TANDEM_PASSWORD"),
-        pump_id = int(os.getenv("TANDEM_PUMP_ID")),
-    )
-    while True:
-        try:
-            sim.detect()
-        except Exception as e:
-            print(f"[{datetime.now().strftime('%H:%M')}] Detection failed: {e}")
-        time.sleep(600)
+    try:
+        sim = Simulate(
+            email = os.getenv("TANDEM_EMAIL"),
+            password = os.getenv("TANDEM_PASSWORD"),
+            pump_id = int(os.getenv("TANDEM_PUMP_ID")),
+        )
+    except KeyError as e:
+        print(f"Missing environment variable: {e}")
+        sys.exit(1)
+    except ImmatureSignatureError as e:
+        print("JWT not yet valid, resync device clock.")
+        sys.exit(1)
+    try:
+        while True:
+            try:
+                sim.detect()
+            except Exception as e:
+                print(f"[{datetime.now().strftime('%H:%M')}] Detection failed: {e}")
+            time.sleep(600)
+    except KeyboardInterrupt:
+        print("Exiting")
