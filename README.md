@@ -146,7 +146,7 @@ The detection score combines three error terms:
 | Slope L1 | 1.5 | Rate-of-change accuracy |
 | Rising slope MSE | 3.0 | Penalises unforecasted rising trends in real-time data |
 
-A score above **mean + 2σ** triggers a mild anomaly warning; above **mean + 3σ** triggers a strong warning. 
+A detectection score above mean + 2σ triggers a mild anomaly warning; above mean + 3σ triggers a strong warning. 
 
 ---
 
