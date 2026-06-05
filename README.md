@@ -71,7 +71,7 @@ Install with:
 pip install torch numpy pandas scikit-learn matplotlib joblib tconnectsync python-dotenv
 ```
 
-A CUDA-capable GPU is expected for training. Inference runs on CPU if needed — change `"cuda"` to `"cpu"` in `model.py`.
+A CUDA-capable GPU is expected for model training. Forecasting runs on CPU if needed (change `"cuda"` to `"cpu"` in `model.py`)
 
 ---
 
@@ -104,13 +104,13 @@ Place one or more `.zip` reports exported from Tandem Source in the `Training/` 
 python train.py
 ```
 
-This will:
+This script will:
 - Extract and merge all zip archives in `Training/`
 - Fit the preprocessing pipeline and save `preprocessor.joblib`
 - Aggregates anomaly detection metrics and save `detection_stats.joblib`
 - Train the LSTM for 10 epochs and save `model_weights.pth`
 
-All three saved files are required to run the simulator.
+All three saved files are necessary for running the simulator.
 
 ---
 
@@ -120,7 +120,7 @@ All three saved files are required to run the simulator.
 python simulate.py
 ```
 
-Fetches live pump data, makes forecasts, displays a forecast chart, and prints a report every 10 minutes:
+Fetches most recent available data from Tandem Source, makes forecasts, displays a forecast chart, and prints an anomaly detection report every 10 minutes:
 
 ```
 ────────────────────────────────────────────────────
@@ -130,7 +130,7 @@ Fetches live pump data, makes forecasts, displays a forecast chart, and prints a
   No anomaly detected
 ```
 
-The chart shows color-coded glucose readings (green = in-range, orange = low/high, red = hypo/hyper) and dashed forecast.
+The chart shows color-coded glucose readings (green = in-range, orange = low/high, red = hypo/hyper) and dashed 2-hour forecast.
 
 <img width="1400" height="500" alt="image" src="https://github.com/user-attachments/assets/a73ce3ec-4845-453b-b1fc-e5252483fc31" />
 
