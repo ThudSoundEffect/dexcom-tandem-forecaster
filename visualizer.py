@@ -3,7 +3,7 @@
 import random
 from datetime import datetime, timedelta
 
-import matplotlib.patches as mpatches
+import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -24,7 +24,7 @@ STEP_MINUTES = 5
 
 
 def to_numpy(x: torch.Tensor | np.ndarray) -> np.ndarray:
-    """Convert a tensor or array-like to a flat NumPy array.
+    """Convert a tensor or array like to a flat NumPy array.
 
     Args:
         x: Input tensor or array.
@@ -38,10 +38,10 @@ def to_numpy(x: torch.Tensor | np.ndarray) -> np.ndarray:
 
 
 def inverse_scale(x: torch.Tensor | np.ndarray) -> np.ndarray:
-    """Reverse the CGM normalisation: ``value * CGM_RANGE + CGM_MIN``.
+    """Reverse the CGM normalization: ``value * CGM_RANGE + CGM_MIN``.
 
     Args:
-        x: Normalised CGM values.
+        x: Normalized CGM values.
 
     Returns:
         CGM values in mg/dL.
@@ -89,18 +89,17 @@ def graph_comparison(
     predicted_vals: np.ndarray,
     start_time: datetime | None = None,
 ) -> None:
-    """Plot input history, ground-truth, and model predictions.
+    """Plot input history, ground truth, and model predictions.
 
     With:
     - Glucose range bands (hypo / in-range / hyper zones)
-    - Color-coded CGM history line
-    - Solid ground-truth future line
-    - Real-time x-axis labels when ``start_time`` is provided
+    - Color-coded true CGM reading line
+    - Real time x-axis labels when ``start_time`` is provided
 
     Args:
         input_vals: Historical CGM readings (mg/dL) fed into the model.
-        real_vals: Actual current CGM readings (mg/dL).
-        predicted_vals: Model-predicted current CGM readings (mg/dL).
+        real_vals: Actual CGM readings (mg/dL).
+        predicted_vals: Model forecasted CGM readings (mg/dL).
         start_time: Datetime of the first input step; enables clock labels on
             the x-axis. Defaults to None (step numbers used instead).
     """
@@ -158,9 +157,9 @@ def graph_comparison(
     ax.set_title("CGM Forecast", fontsize=12, fontweight="bold")
 
     zone_patches = [
-        mpatches.Patch(color="#2ca02c", label="In range (80–180)"),
-        mpatches.Patch(color="#ff7f0e", label="Low / High"),
-        mpatches.Patch(color="#d62728", label="Hypo / Hyper"),
+        patches.Patch(color="#2ca02c", label="In range (80–180)"),
+        patches.Patch(color="#ff7f0e", label="Low / High"),
+        patches.Patch(color="#d62728", label="Hypo / Hyper"),
     ]
     handles, labels = ax.get_legend_handles_labels()
     ax.legend(
@@ -176,7 +175,7 @@ def graph_comparison(
 
 
 def aggregate_stats(cgm_df: "pd.DataFrame") -> "pd.DataFrame":
-    """Compute mean, Q1, and Q3 of CGM readings grouped by time-of-day.
+    """Compute mean, Q1, and Q3 of CGM readings grouped by time of day.
 
     Args:
         cgm_df: DataFrame with 'Time' and 'Readings (mg/dL)' columns.
@@ -196,7 +195,7 @@ def aggregate_stats(cgm_df: "pd.DataFrame") -> "pd.DataFrame":
 
 
 def graph_avg(cgm_df: "pd.DataFrame") -> None:
-    """Plot daily-average CGM with Q1/Q3 bands across all available days.
+    """Plot daily average CGM with Q1/Q3 bands across all available days.
 
     Args:
         cgm_df: Raw CGM DataFrame with an 'Event Date Time' column.
@@ -218,7 +217,7 @@ def graph_avg(cgm_df: "pd.DataFrame") -> None:
 
 
 class Visualizer:
-    """Interactive visualiser that cycles through random test-set predictions.
+    """Interactive visualizer that cycles through random test set predictions.
 
     Args:
         model: Trained CgmLstm model.

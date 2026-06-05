@@ -43,7 +43,7 @@ def compute_error_detection_score(
 ) -> float:
     """Score the difference between predicted and actual CGM trajectories.
 
-    Combines value error, slope error, and an asymmetric rising-slope penalty
+    Combines value error, slope error, and an asymmetric rising slope penalty
     to flag sensor anomalies or unexpected glucose changes.
 
     Args:
@@ -73,7 +73,7 @@ class Simulate:
     """Pull recent pump data, run the LSTM, and flag CGM anomalies.
 
     Args:
-        email: Tandem account e-mail address.
+        email: Tandem account email address.
         password: Tandem account password.
         pump_id: Numeric pump identifier.
     """
@@ -164,7 +164,7 @@ class Simulate:
         self.df = self.preprocessor.transform(self.df)
 
     def detect(self) -> None:
-        """Fetch live data, run inference, plot results, and print anomaly verdict."""
+        """Fetch live data, make forecast, plot results, and print anomaly verdict."""
         self._fetch_recent_data()
 
         window = self.df.iloc[-INPUT_WINDOW:-OFFSET].values

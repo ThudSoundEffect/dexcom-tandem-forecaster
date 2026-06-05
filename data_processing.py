@@ -80,7 +80,7 @@ class MergedDf:
         """Align and merge CGM, basal, and bolus data on rounded timestamps.
 
         Returns:
-            Merged DataFrame with time-encoding and normalised CGM column.
+            Merged DataFrame with time-encoding and normalized CGM column.
         """
         self.cgm = round_times(self.cgm, "Event Date Time")
         self.basal = round_times(self.basal, "Event Date Time")

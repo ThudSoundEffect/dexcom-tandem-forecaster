@@ -15,7 +15,7 @@ COMBO_LOSS_WEIGHT = 0.5
 
 
 class CgmLstm(nn.Module):
-    """Three-layer LSTM that predicts the next 24 CGM readings.
+    """Three layer LSTM that predicts the next 24 CGM readings.
 
     Architecture:
         - LSTM: input_size=7, hidden_size=128, num_layers=3, dropout=0.2
@@ -94,7 +94,7 @@ class CgmLstm(nn.Module):
             print(f"Epoch {epoch + 1}/{epochs}, Loss: {avg_loss:.4f}")
 
     def evaluate_model(self, test_loader: DataLoader) -> None:
-        """Evaluate the model on a held-out test set.
+        """Evaluate the model on a test set.
 
         Args:
             test_loader: DataLoader yielding (inputs, targets) batches.
