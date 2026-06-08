@@ -56,7 +56,7 @@ A real time glucose forecasting and anomaly detection system for Tandem t:slim X
 - Slope loss: loss between first derivatives of targets and predictions
 - Curvature loss: loss between second derivatives of targets and predictions
 - Exponential moving averages and variances are maintained per batch for value, slope, and curvature
-- Each loss is EMA normalized by dividing loss values by square root of variance
+- Each loss is EMA normalized to prevent differences in their natural scales from impacting which loss component dominates
   
 ---
 
